@@ -3,9 +3,10 @@
 # @api private
 #
 class gitlab_ci_runner::repo (
-  $repo_base_url  = $gitlab_ci_runner::repo_base_url,
-  $repo_keyserver = $gitlab_ci_runner::repo_keyserver,
-  $package_name   = $gitlab_ci_runner::package_name,
+  $repo_base_url    = $gitlab_ci_runner::repo_base_url,
+  $repo_keyserver   = $gitlab_ci_runner::repo_keyserver,
+  $package_name     = $gitlab_ci_runner::package_name,
+  $repo_apt_release = $gitlab_ci_runner::repo_apt_release,
 ) {
   assert_private()
   case $facts['os']['family'] {
@@ -14,13 +15,14 @@ class gitlab_ci_runner::repo (
         comment  => 'GitlabCI Runner Repo',
         location => "${repo_base_url}/runner/${package_name}/${facts['os']['distro']['id'].downcase}/",
         repos    => 'main',
+        release  => $repo_apt_release,
         key      => {
-          'id'     => 'F6403F6544A38863DAA0B6E03F01618A51312F3F',
-          'server' => $repo_keyserver,
+        'id'     => 'F6403F6544A38863DAA0B6E03F01618A51312F3F',
+        'server' => $repo_keyserver,
         },
         include  => {
-          'src' => false,
-          'deb' => true,
+        'src'    => false,
+        'deb'    => true,
         },
       }
       Apt::Source['apt_gitlabci'] -> Package[$package_name]

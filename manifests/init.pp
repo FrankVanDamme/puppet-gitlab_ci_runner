@@ -78,6 +78,7 @@ class gitlab_ci_runner (
   String                                     $package_name    = 'gitlab-runner',
   Stdlib::HTTPUrl                            $repo_base_url   = 'https://packages.gitlab.com',
   Optional[Gitlab_ci_runner::Keyserver]      $repo_keyserver  = undef,
+  Optional[String]                           $repo_apt_release= undef,
   String                                     $config_path     = '/etc/gitlab-runner/config.toml',
   Optional[Stdlib::HTTPUrl]                  $http_proxy      = undef,
   Optional[Stdlib::Unixpath]                 $ca_file         = undef,
